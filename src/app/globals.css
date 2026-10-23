@@ -1,26 +1,498 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  --color-brand-primary: #00306E;
+  --color-brand-primary-hover: #002255;
+  --color-brand-secondary: #0055C2;
+  --color-brand-navy: #0F172A;
+  --color-brand-gold: #FBBF24;
+  --color-brand-gold-hover: #F59E0B;
+  --color-brand-gold-light: #FEF3C7;
+  
+  --color-surface-light: #F8FAFC;
+  --color-surface-main: #FFFFFF;
+  --color-surface-border: #E2E8F0;
+  
+  --color-text-primary: #00306E;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94A3B8;
+  
+  --color-status-success: #16845B;
+  --color-status-error: #DC2626;
+  --color-status-warning: #D97706;
+  --color-status-info: #2563EB;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Plus Jakarta Sans', system-ui, sans-serif;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --text-display-xl: 4.5rem;
+  --text-display-xl--line-height: 1.1;
+  --text-display-xl--letter-spacing: -0.02em;
+  
+  --text-display-lg: 3.75rem;
+  --text-display-lg--line-height: 1.1;
+  --text-display-lg--letter-spacing: -0.02em;
+  
+  --text-display-md: 3rem;
+  --text-display-md--line-height: 1.2;
+  --text-display-md--letter-spacing: -0.01em;
+  
+  --text-display-sm: 2.25rem;
+  --text-display-sm--line-height: 1.2;
+  
+  --text-heading-xl: 1.875rem;
+  --text-heading-xl--line-height: 1.3;
+  
+  --text-heading-lg: 1.5rem;
+  --text-heading-lg--line-height: 1.3;
+  
+  --text-heading-md: 1.25rem;
+  --text-heading-md--line-height: 1.4;
+  
+  --text-heading-sm: 1.125rem;
+  --text-heading-sm--line-height: 1.4;
+  
+  --text-body-lg: 1.125rem;
+  --text-body-lg--line-height: 1.6;
+  
+  --text-body: 1rem;
+  --text-body--line-height: 1.6;
+  
+  --text-body-sm: 0.875rem;
+  --text-body-sm--line-height: 1.5;
+  
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.5;
+
+  --spacing-18: 4.5rem;
+  --spacing-22: 5.5rem;
+  --spacing-26: 6.5rem;
+  --spacing-30: 7.5rem;
+
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+
+  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.05), 0 1px 2px -1px rgb(0 0 0 / 0.05);
+  --shadow-card-hover: 0 10px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.05);
+  --shadow-elevated: 0 20px 40px -10px rgb(0 0 0 / 0.15);
+  --shadow-gold-glow: 0 0 20px -5px rgb(212 166 58 / 0.5);
+
+  --animate-fade-in: fadeIn 0.3s ease-out;
+  --animate-slide-up: slideUp 0.4s ease-out;
+  --animate-slide-down: slideDown 0.3s ease-out;
+  --animate-scale-in: scaleIn 0.2s ease-out;
+  --animate-pulse-soft: pulseSoft 2s ease-in-out infinite;
+
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  @keyframes slideUp {
+    0% { opacity: 0; transform: translateY(10px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes slideDown {
+    0% { opacity: 0; transform: translateY(-10px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes scaleIn {
+    0% { opacity: 0; transform: scale(0.95); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+  
+  @keyframes pulseSoft {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    border-color: var(--color-surface-border);
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    background-color: var(--color-surface-main);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+}
+
+/* Custom component classes as regular CSS */
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-gold,
+.btn-outline,
+.btn-ghost,
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: var(--radius-xl);
+  padding: 0.8rem 1.5rem;
+  font-size: var(--text-body);
+  font-weight: 600;
+  transition: all 0.2s;
+  outline: none;
+}
+
+.btn:focus-visible {
+  outline: none;
+  ring: 2px;
+  ring-offset: 2px;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.btn-primary {
+  background: linear-gradient(to right, var(--color-brand-gold), var(--color-brand-gold-hover));
+  color: white;
+  box-shadow: var(--shadow-lg), 0 0 20px -5px rgba(212, 166, 58, 0.2);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(to right, var(--color-brand-gold-hover), var(--color-brand-gold));
+}
+
+.btn-primary:focus-visible {
+  ring-color: var(--color-brand-gold);
+}
+
+.btn-primary:active {
+  background: linear-gradient(to right, var(--color-brand-gold-hover), var(--color-brand-gold));
+}
+
+.btn-primary-lg {
+  padding: 1rem 2rem;
+  font-size: var(--text-body-lg);
+  border-radius: var(--radius-xl);
+}
+
+.btn-secondary {
+  background-color: rgba(212, 166, 58, 0.1);
+  color: var(--color-brand-gold-hover);
+  border: 1.5px solid rgba(212, 166, 58, 0.4);
+}
+
+.btn-secondary:hover {
+  background-color: rgba(212, 166, 58, 0.18);
+  border-color: var(--color-brand-gold);
+}
+
+.btn-secondary:focus-visible {
+  ring-color: var(--color-brand-gold);
+}
+
+.btn-gold {
+  background: linear-gradient(to right, var(--color-brand-gold), var(--color-brand-gold-hover));
+  color: white;
+  box-shadow: var(--shadow-lg), 0 0 20px -5px rgba(212, 166, 58, 0.2);
+}
+
+.btn-gold:hover {
+  background: linear-gradient(to right, var(--color-brand-gold-hover), var(--color-brand-gold));
+}
+
+.btn-gold:focus-visible {
+  ring-color: var(--color-brand-gold);
+}
+
+.btn-gold:active {
+  background: linear-gradient(to right, var(--color-brand-gold-hover), var(--color-brand-gold));
+}
+
+.btn-gold-lg {
+  padding: 1rem 2rem;
+  font-size: var(--text-body-lg);
+  border-radius: var(--radius-xl);
+}
+
+.btn-outline {
+  border: 2px solid var(--color-brand-gold);
+  color: var(--color-brand-gold-hover);
+  background-color: transparent;
+}
+
+.btn-outline:hover {
+  background-color: var(--color-brand-gold);
+  color: white;
+}
+
+.btn-outline:focus-visible {
+  ring-color: var(--color-brand-gold);
+}
+
+.btn-ghost {
+  color: var(--color-text-secondary);
+}
+
+.btn-ghost:hover {
+  color: var(--color-text-primary);
+  background-color: var(--color-surface-light);
+}
+
+.btn-ghost:focus-visible {
+  ring-color: var(--color-surface-border);
+}
+
+.btn-icon {
+  padding: 0.5rem;
+}
+
+/* In the components layer so Tailwind utilities (pl-10, pr-10, ...) can
+   override these defaults — unlayered rules would always beat utilities. */
+@layer components {
+  .input {
+    width: 100%;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--color-surface-border);
+    background-color: var(--color-surface-main);
+    padding: 0.75rem 1rem;
+    font-size: var(--text-body);
+    color: var(--color-text-primary);
+    transition: all 0.2s;
+    outline: none;
+  }
+
+  .input::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  .input:focus {
+    border-color: var(--color-brand-primary);
+    box-shadow: 0 0 0 2px rgba(18, 59, 102, 0.2);
+  }
+
+  .input:disabled {
+    background-color: var(--color-surface-light);
+    cursor: not-allowed;
+  }
+
+  .input-error {
+    border-color: var(--color-status-error);
+  }
+
+  .input-error:focus {
+    border-color: var(--color-status-error);
+    box-shadow: 0 0 0 2px rgba(214, 69, 69, 0.2);
+  }
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.375rem;
+  font-size: var(--text-body-sm);
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.card {
+  border-radius: var(--radius-2xl);
+  background-color: var(--color-surface-main);
+  border: 1px solid var(--color-surface-border);
+  box-shadow: var(--shadow-card);
+  transition: all 0.3s;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-card-hover);
+}
+
+.card-hover {
+  border-radius: var(--radius-2xl);
+  background-color: var(--color-surface-main);
+  border: 1px solid var(--color-surface-border);
+  box-shadow: var(--shadow-card);
+  transition: all 0.3s;
+}
+
+.card-hover:hover {
+  transform: translateY(-0.25rem);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  font-size: var(--text-caption);
+  font-weight: 500;
+}
+
+.badge-primary {
+  background-color: rgba(18, 59, 102, 0.1);
+  color: var(--color-brand-primary);
+}
+
+.badge-gold {
+  background-color: var(--color-brand-gold-light);
+  color: var(--color-brand-gold-hover);
+}
+
+.badge-success {
+  background-color: rgba(22, 132, 91, 0.1);
+  color: var(--color-status-success);
+}
+
+.badge-warning {
+  background-color: rgba(232, 160, 0, 0.1);
+  color: var(--color-status-warning);
+}
+
+.badge-error {
+  background-color: rgba(214, 69, 69, 0.1);
+  color: var(--color-status-error);
+}
+
+.badge-outline {
+  border: 1px solid var(--color-surface-border);
+  background-color: transparent;
+}
+
+.container-page {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 80rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .container-page {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-page {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+.section {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+@media (min-width: 640px) {
+  .section {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+.section-sm {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+@media (min-width: 640px) {
+  .section-sm {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+}
+
+.text-gradient-gold {
+  background: linear-gradient(to right, var(--color-brand-gold), var(--color-brand-gold-hover));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-blue {
+  background: linear-gradient(to right, var(--color-brand-primary), var(--color-brand-secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-gradient-brand {
+  background: linear-gradient(to bottom right, var(--color-brand-primary), var(--color-brand-secondary), var(--color-brand-navy));
+}
+
+.bg-gradient-gold {
+  background: linear-gradient(to right, var(--color-brand-gold), var(--color-brand-gold-hover));
+}
+
+.link {
+  color: var(--color-brand-primary);
+  transition: color 0.2s;
+  text-underline-offset: 0.125rem;
+}
+
+.link:hover {
+  color: var(--color-brand-secondary);
+  text-decoration: underline;
+}
+
+.skeleton {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  background-color: var(--color-surface-border);
+  border-radius: var(--radius-xl);
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.animation-delay-100 {
+  animation-delay: 100ms;
+}
+
+.animation-delay-200 {
+  animation-delay: 200ms;
+}
+
+.animation-delay-300 {
+  animation-delay: 300ms;
+}
+
+.animation-delay-400 {
+  animation-delay: 400ms;
+}
+
+.animation-delay-500 {
+  animation-delay: 500ms;
 }
